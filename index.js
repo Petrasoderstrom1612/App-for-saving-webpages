@@ -1,3 +1,5 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+
 const inputEl = document.getElementById("input-el")
 const ulEl = document.getElementById("ul-el")
 const tabBtn = document.getElementById("tab-btn")
