@@ -1,4 +1,7 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js"
+const firebaseConfig = {}
+const app = initializeApp(firebaseConfig);
+console.log(app)
 
 const inputEl = document.getElementById("input-el")
 const ulEl = document.getElementById("ul-el")
