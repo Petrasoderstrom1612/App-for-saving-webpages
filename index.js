@@ -1,12 +1,15 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js"
-const firebaseConfig = {}
+import { getDatabase } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js"
+
+const firebaseConfig = {databaseURL: "https://websites-tracker-app-default-rtdb.europe-west1.firebasedatabase.app/"}
+
 const app = initializeApp(firebaseConfig);
-console.log(app)
+const database = getDatabase(app)
+console.log(database)
 
 const inputEl = document.getElementById("input-el")
 const ulEl = document.getElementById("ul-el")
-const tabBtn = document.getElementById("tab-btn")
-const remoteTabBtn = document.getElementById("remote-tab-btn")
+const removeLast = document.getElementById("remove-last")
 let mySites = []
 let lastloop = 0
 
@@ -28,22 +31,6 @@ document.getElementById("input-btn").addEventListener("click", function(){ //STA
     displayMySites(mySites) //display all the inputs
 })
 
-//ADD CURRENT TAB
-tabBtn.addEventListener("click", function(){
-    // mySites.push(document.baseURI) This does not work for extension as it is saving the currect chrome extension uri instead of the current tab hence the code below from Stack overflow. It would work for browser.
-    let queryInfo = {
-        currentWindow: true, //the current window and not another one opened behind
-        active: true //the current tab
-    };
-
-    chrome.tabs.query(queryInfo, function(tabs) {
-    let url = tabs[0].url
-    mySites.push(url)
-    mySitesFromLocalStorage = localStorage.setItem("mySites", JSON.stringify(mySites))
-    displayMySites(mySites)
-    })
-})
-
 //LOOP TO DISPLAY ALL
 function displayMySites(desiredArrayOfSites){ //instead of looping through mySites and slowing down the page, we can create one extra variable and keep adding the new mySites to it and only render the stored new variable with all mySites, instead of updating on every loop. Remember! DOM manipulation comes with a cost.
     let listItems = ""
@@ -54,7 +41,7 @@ function displayMySites(desiredArrayOfSites){ //instead of looping through mySit
 }
 
 //REMOVE LAST ADDED
-remoteTabBtn.addEventListener("click", function(){
+removeLast.addEventListener("click", function(){
     mySites.pop()
     mySitesFromLocalStorage = localStorage.setItem("mySites", JSON.stringify(mySites))
     displayMySites(mySites)
